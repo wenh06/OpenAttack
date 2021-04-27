@@ -33,7 +33,6 @@ from . import utils
 
 download = DataManager.download
 load = DataManager.load
-loadDataset = DataManager.loadDataset
 loadAttackAssist = DataManager.loadAttackAssist
 loadVictim = DataManager.loadVictim
 loadTProcess = DataManager.loadTProcess

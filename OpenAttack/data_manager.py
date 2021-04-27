@@ -39,6 +39,8 @@ class DataManager(object):
 
     __auto_download = True
 
+    __enable_cdn = False
+
     def __init__(self):
         raise NotImplementedError
 
@@ -74,16 +76,8 @@ class DataManager(object):
                 )
             except OSError:
                 raise DataNotExistException(data_name, cls.data_path[data_name])
-        return cls.data_reference[data_name]
-    
-    @classmethod
-    def loadDataset(cls, data_name, cached=True):
-        """
-        This method is equivalent to ``DataManager.load("Dataset." + data_name)``.
-        :rtype: Dataset
-        """
-        return cls.load("Dataset." + data_name, cached=cached)
-    
+        return cls.data_reference[data_name]    
+
     @classmethod
     def loadVictim(cls, data_name, cached=True):
         """
