@@ -12,6 +12,8 @@ def make_zip_downloader(URL, file_list=None):
         file_list = [file_list]
 
     def DOWNLOAD(path):
+        print("   make_zip_downloader -- DOWNLOAD   ".center(80, "*"))
+        print(f"downloading from {URL} into {path}")
         try:
             with urllib.request.urlopen(URL) as f:
                 zf = zipfile.ZipFile(io.BytesIO(f.read()))

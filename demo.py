@@ -38,8 +38,11 @@ def main():
     attacker = OpenAttack.attackers.PWWSAttacker()
 
     print("Build model")
-    clsf = OpenAttack.loadVictim("BERT.SST").to("cuda:0")
+    clsf = OpenAttack.loadVictim("BERT.SST")
+    print(f"type(clsf) = {type(clsf).__name__}")
+    clsf = clsf.to("cuda:0")
 
+    print("Load dataset")
     dataset = datasets.load_dataset("sst", split="train[:100]").map(function=dataset_mapping)
 
     print("Start attack")

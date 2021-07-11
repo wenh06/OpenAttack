@@ -1,5 +1,7 @@
 import OpenAttack
 import datasets
+import torch
+from torch.nn.parallel import DataParallel as DP, DistributedDataParallel as DDP
 
 def dataset_mapping(x):
     return {
@@ -20,7 +22,9 @@ def main():
     attacker = OpenAttack.attackers.PWWSAttacker(processor=chinese_processor, substitute=chinese_substitute, threshold=None)
 
     print("Building model")
-    clsf = OpenAttack.loadVictim("BERT.AMAZON_ZH").to("cuda:0")
+    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+    # clsf = OpenAttack.loadVictim("BERT.AMAZON_ZH").to("cuda:0")
+    clsf = DP(OpenAttack.loadVictim("BERT.AMAZON_ZH").to(device))
 
     print("Loading dataset")
     dataset = datasets.load_dataset("amazon_reviews_multi",'zh',split="train[:20]").map(function=dataset_mapping)

@@ -17,6 +17,8 @@ URL = "https://cdn.data.thunlp.org/TAADToolbox/victim/bert_amazon_reviews_zh.zip
 DOWNLOAD = make_zip_downloader(URL)
 
 def LOAD(path):
+    print("victim_bert_amazon_zh.py".center(80, "-"))
+    print(f"path = {path}")
     from OpenAttack import HuggingfaceClassifier
     import transformers
     tokenizer = transformers.BertTokenizer.from_pretrained(path)

@@ -44,3 +44,27 @@ ChineseLanguageTool
 .. autoclass:: OpenAttack.metric.ChineseLanguageTool
     :members: __init__, __call__
 
+BLEU
+------
+
+.. autoclass:: OpenAttack.metric.BLEU
+    :members: __init__, __call__
+
+Jaccard_Char
+--------------
+
+.. autoclass:: OpenAttack.metric.Jaccard_Char
+    :members: __init__, __call__
+
+Jaccard_Word
+--------------
+
+.. autoclass:: OpenAttack.metric.Jaccard_Word
+    :members: __init__, __call__
+
+Sim_Cos
+---------
+
+.. autoclass:: OpenAttack.metric.Sim_Cos
+    :members: __init__, __call__
+

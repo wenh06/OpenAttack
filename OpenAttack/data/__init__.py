@@ -43,3 +43,6 @@ def load_data():
 
 data_list = load_data()
 del load_data
+
+
+# print(f"\ndata_list = {data_list}\n")

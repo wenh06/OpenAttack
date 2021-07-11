@@ -56,11 +56,16 @@ class DataManager(object):
 
         
         """
+        print("   DataManager -- load   ".center(80, "*"))
+        print(f"data_name = {data_name}")
         if data_name not in cls.AVAILABLE_DATAS:
             raise UnknownDataException
 
         if not os.path.exists(cls.data_path[data_name]):
+            print(f"no cached data for {data_name}")
             if cls.__auto_download:
+                print(f"start auto download for {data_name}")
+                print(f"into {cls.data_path[data_name]}")
                 cls.download(data_name)
             else:
                 raise DataNotExistException(data_name, cls.data_path[data_name])
@@ -172,5 +177,6 @@ class DataManager(object):
             path = cls.data_path[data_name]
         if os.path.exists(path) and not force:
             return True
+        print(f"download using {cls.data_download[data_name]} into {path}")
         cls.data_download[data_name](path)
         return True
