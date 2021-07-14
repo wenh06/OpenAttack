@@ -35,6 +35,11 @@ def load_data():
                 tmp["load"] = data.LOAD
             else:
                 tmp["load"] = pickle_loader
+            
+            if hasattr(data, "URL"):
+                tmp["url"] = data.URL
+            else:
+                tmp["url"] = ""
             ret.append(tmp)
         else:
             pass  # this is not a data module
