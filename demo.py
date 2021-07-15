@@ -1,5 +1,6 @@
 import OpenAttack
 import nltk
+import torch
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import numpy as np
 import datasets
@@ -40,7 +41,10 @@ def main():
     print("Build model")
     clsf = OpenAttack.loadVictim("BERT.SST")
     print(f"type(clsf) = {type(clsf).__name__}")
-    clsf = clsf.to("cuda:0")
+    
+    # choose device
+    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+    clsf = clsf.to(device)
 
     print("Load dataset")
     dataset = datasets.load_dataset("sst", split="train[:100]").map(function=dataset_mapping)
