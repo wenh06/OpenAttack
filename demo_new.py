@@ -27,9 +27,13 @@ def main():
     # choose Genetic as the attacker and initialize it with default parameters
     print("New Attacker")
     attacker = oa.attackers.GeneticAttacker()
-    
+
+    print("Start attack")
+    options = {
+        # TO ADD
+    }
     # prepare for attacking
-    attack_eval = oa.attack_evals.DefaultAttackEval(attacker, victim)
+    attack_eval = oa.attack_evals.DefaultAttackEval(attacker, victim, **options)
     # launch attacks and print attack results 
     attack_eval.eval(dataset, visualize=True)
 
