@@ -37,14 +37,15 @@ def main():
 
     print("New Attacker")
     attacker = OpenAttack.attackers.PWWSAttacker()
+    # attacker = OpenAttack.attackers.GeneticAttacker()
 
     print("Build model")
     clsf = OpenAttack.loadVictim("BERT.SST")
     print(f"type(clsf) = {type(clsf).__name__}")
     
-    # choose device
-    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-    clsf = clsf.to(device)
+    # choose device (deprecated, already on GPU)
+    # device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+    # clsf = clsf.to(device)
 
     print("Load dataset")
     dataset = datasets.load_dataset("sst", split="train[:100]").map(function=dataset_mapping)
@@ -61,9 +62,11 @@ def main():
         "running_time": True,
 
         "invoke_limit": 500,
-        "average_invoke": True
+        "average_invoke": True,
+
+        "num_process": 1,  # >=2 would result in `CUDA out of memory error` (tf version == 2.5)
     }
-    attack_eval = OpenAttack.attack_evals.InvokeLimitedAttackEval(attacker, clsf, **options, num_process=4)
+    attack_eval = OpenAttack.attack_evals.InvokeLimitedAttackEval(attacker, clsf, **options)
     attack_eval.eval(dataset, visualize=True, progress_bar=True)
 
 if __name__ == "__main__":

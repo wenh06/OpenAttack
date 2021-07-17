@@ -20,11 +20,13 @@ def main():
 
     print("New Attacker")
     attacker = OpenAttack.attackers.PWWSAttacker(processor=chinese_processor, substitute=chinese_substitute, threshold=None)
+    # attacker = OpenAttack.attackers.GeneticAttacker()
 
     print("Building model")
-    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+    # device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
     # clsf = OpenAttack.loadVictim("BERT.AMAZON_ZH").to("cuda:0")
-    clsf = DP(OpenAttack.loadVictim("BERT.AMAZON_ZH").to(device))
+    # clsf = DP(OpenAttack.loadVictim("BERT.AMAZON_ZH").to(device))
+    clsf = OpenAttack.loadVictim("BERT.AMAZON_ZH")
 
     print("Loading dataset")
     dataset = datasets.load_dataset("amazon_reviews_multi",'zh',split="train[:20]").map(function=dataset_mapping)
@@ -39,8 +41,10 @@ def main():
         "word_distance": True,
         "modification_rate": True,
         "running_time": True,
+
+        "num_process": 1,  # >=2 would result in `CUDA out of memory error` (tf version == 2.5)
     }
-    attack_eval = OpenAttack.attack_evals.ChineseAttackEval(attacker, clsf, **options, num_process=2)
+    attack_eval = OpenAttack.attack_evals.ChineseAttackEval(attacker, clsf, **options)
     attack_eval.eval(dataset, visualize=True, progress_bar=True)
 
 if __name__ == "__main__":
